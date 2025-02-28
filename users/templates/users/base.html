@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    {% block head %}
+        <title>login</title>
+    {% endblock head %}
+
+
+    <link rel="stylesheet" href="{% static 'users/bulma.css' %}">
+</head>
+<body>
+
+<div class = 'container'>
+    {% block content %}
+    {% endblock content %}
+
+</div>
+
+</body>
+</html>
