@@ -14,7 +14,7 @@
     <div class="container">
         <div class="navbar-brand">
             <a href="{% url 'blog:index' %}" class=" navbar-item">
-                <img src="{% static 'users/images/horizon_LOGO.jpg' %}" width="112" height="28" alt="logo">
+                <img src="{% static 'users/images/MyBlog_LOGO.png' %}" width="112" height="28" alt="logo">
             </a>
             <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
                data-target="navbarBasicExample">
@@ -35,7 +35,7 @@
                                         <img class=" is-rounded" src="{{ MEDIA_URL }}{{ user.userprofile.image }}"
                                              alt="" srcset="">
                                     {% else %}
-                                        <img class=" is-rounded" src="{% static 'users/images/LOGO.jpg' %}" alt=""
+                                        <img class=" is-rounded" src="{% static 'users/images/default_user_img.jpg' %}" alt=""
                                              srcset="">
                                     {% endif %}
                                 </figure>&nbsp;&nbsp;
@@ -84,7 +84,7 @@
                 <div class="column is-2">
                     <div class="card">
                         <header class="card-header">
-                            <p class="card-header-title">个人中心</p>
+                            <p class="card-header-title">My Center</p>
                             <a href="" class="card-header-icon" aria-label="more options">
                                 <span class="icon">
                                     <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -93,8 +93,8 @@
                         </header>
                         <div class="card-content menu">
                             <ul class="content menu-list">
-                                <li><a href="{% url 'users:user_profile' %}">个人信息</a></li>
-                                <!-- <li><a href="">修改密码</a></li> -->
+                                <li><a href="{% url 'users:user_profile' %}">My Profile</a></li>
+                                <li><a href="{% url 'users:forget_pwd' %}">Reset Password</a></li>
 
                             </ul>
                         </div>
@@ -102,7 +102,7 @@
                     </div>
                     <div class="card">
                             <header class="card-header">
-                                <p class="card-header-title">内容管理</p>
+                                <p class="card-header-title">Post Management</p>
                                 <a href="#" class="card-header-icon" aria-label="more options">
                                     <span class="icon">
                                         <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -111,9 +111,8 @@
                             </header>
                             <div class="card-content menu">
                                 <ul class="content menu-list">
-                                    <li><a href="">添加文章</a></li>
-                                    <li><a href="">已发布</a></li>
-                                    <li><a href="">草稿箱</a></li>
+                                    <li><a href="{% url 'blog:add_post' %}">Create a new Post</a></li>
+
 
                                 </ul>
                             </div>
@@ -127,7 +126,7 @@
                             <ul>
 
                               {% block title %}
-                              <li class="is-active"><a>账号信息</a></li>
+                              <li class="is-active"><a>Account Information</a></li>
                               {% endblock %}
 
                             </ul>
@@ -162,55 +161,53 @@
                                 {% if user.userprofile.character_signature %}
                                     <p class="subtitle is-size-6">{{ user.userprofile.character_signature }}</p>
                                     {% else %}
-                                    <p class="subtitle is-size-6">暂未设置个性签名</p>
+                                    <p class="subtitle is-size-6">None</p>
                                 {% endif %}
 
 
                             </div>
                         </div>
                         <div class="column is-narrow-mobile">
-                            <a class=" button is-light is-pulled-right" href="" style="margin-top: 1.8rem">修改信息</a>
+                            <a class=" button is-light is-pulled-right" href="{% url 'users:editor_users' %}" style="margin-top: 1.8rem">Modify Information</a>
                         </div>
                     </div>
 
                     <div class="columns" style="padding:1rem 0; ">
                         <div class="column is-2">
-                            <p>个人信息</p>
+                            <p>Personal Information</p>
                         </div>
                         <div class="column">
                             <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
                                 <div class="column is-2">
-                                   <span class=" has-text-grey-light">昵称</span>
+                                   <span class=" has-text-grey-light">Nickname</span>
                                 </div>
                                     <div class="column is-narrow">
                                         {% if user.userprofile.nike_name %}
                                         <span class=" has-text-black-ter">{{ user.userprofile.nike_name }}</span>
                                         {% else %}
-                                        <span class=" has-text-black-ter">暂未设置用户昵称</span>
+                                        <span class=" has-text-black-ter">None</span>
                                         {% endif %}
 
                                     </div>
-                                <!-- <div class="column has-text-right">
-                                    <a href="">更改类型</a>
-                                </div> -->
+
 
                             </div>
                             <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
                                 <div class="column is-2">
-                                   <span class=" has-text-grey-light">性别</span>
+                                   <span class=" has-text-grey-light">Gender</span>
                                 </div>
                                 <div class="column is-narrow">
                                     {% if user.userprofile %}
                                     <span class=" has-text-black-ter">{{ user.userprofile.get_gender_display }}</span>
                                     {% else %}
-                                    <span class=" has-text-black-ter">暂未设置</span>
+                                    <span class=" has-text-black-ter">None</span>
                                     {% endif %}
                                 </div>
 
                             </div>
                             <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
                                 <div class="column is-2">
-                                   <span class=" has-text-grey-light">邮箱</span>
+                                   <span class=" has-text-grey-light">Email</span>
                                 </div>
                                 <div class="column is-narrow">
                                     <span class=" has-text-black-ter">{{ user.email }}</span>
@@ -220,13 +217,13 @@
 
                             <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
                                 <div class="column is-2">
-                                   <span class=" has-text-grey-light">地址</span>
+                                   <span class=" has-text-grey-light">Address</span>
                                 </div>
                                 <div class="column is-narrow">
                                     {% if user.userprofile %}
                                     <span class=" has-text-black-ter">{{ user.userprofile.address }}</span>
                                     {% else %}
-                                    <span class=" has-text-black-ter">暂未添加地址</span>
+                                    <span class=" has-text-black-ter">None</span>
                                     {% endif %}
 
                                 </div>
@@ -237,14 +234,14 @@
 
                     <div class="columns" style="padding:1rem 0; ">
                         <div class="column is-2">
-                            <p>个人简介</p>
+                            <p>Self-introduction</p>
                         </div>
                         <div class="column">
                             <div class="content">
                                 {% if user.userprofile.desc %}
                                 {{ user.userprofile.desc }}
                                 {% else %}
-                                暂未设置
+                                None
                                 {% endif %}
 
                             </div>

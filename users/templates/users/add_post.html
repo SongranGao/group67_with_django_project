@@ -1,0 +1,59 @@
+{% extends 'users/user_profile.html' %}
+
+{% block title %}
+<li class="is-active"><a>发表文章</a></li>
+{% endblock  %}
+
+{% block content %}
+    {{ form.media }}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="field">
+            <label class="label">标题</label>
+            <div class="control">
+                <input class="input" type="text" name="title" placeholder="文章标题" required>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">描述</label>
+            <div class="control">
+                <textarea class="textarea" name="desc" placeholder="文章描述"></textarea>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">类别</label>
+            <div class="control">
+                <div class="select">
+                    <select name="category" required>
+                        <option value="">选择类别</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">内容</label>
+            <div class="control">
+                {{ form.content }}
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">标签</label>
+            <div class="control">
+                <div class="select">
+                    <select name="tags">
+                        <option value="">选择标签</option>
+                        {% for tag in tags %}
+                        <option value="{{ tag.id }}">{{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <input class=" button is-primary is-pulled-right" type="submit" value="提交">
+        <div class=" is-clearfix"></div>
+    </form>
+
+{% endblock %}

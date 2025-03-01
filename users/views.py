@@ -123,7 +123,6 @@ def logout_view(request):
 
 @login_required(login_url='users:login')
 def editor_users(request):
-    """ 编辑用户信息 """
     user = User.objects.get(id=request.user.id)
     if request.method == "POST":
         try:
@@ -151,5 +150,8 @@ def editor_users(request):
             user_profile_form = UserProfileForm(instance=userprofile)
         except UserProfile.DoesNotExist:
             form = UserForm(instance=user)
-            user_profile_form = UserProfileForm()  # 显示空表单
+            user_profile_form = UserProfileForm()
     return render(request, 'users/editor_users.html', locals())
+
+def add_article(request):
+    return render(request, 'users/add_post.html')

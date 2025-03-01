@@ -62,10 +62,9 @@ class Sidebar(models.Model):
 
     DISPLAY_TYPE = (
         (1, 'search'),
-        (2, 'create a new post'),
-        (3, 'Latest Articles'),
-        (4, 'Hot Articles'),
-        (5, 'Article Archives'),
+        (2, 'Latest Articles'),
+        (3, 'Hot Articles'),
+        (4, 'Article Archives'),
     )
 
     title = models.CharField(max_length=50, verbose_name="Module Name")
@@ -98,18 +97,13 @@ class Sidebar(models.Model):
             context = {
 
             }
-            return render_to_string('blog/sidebar/create.html', context=context)
+            return render_to_string('blog/sidebar/new_post.html', context=context)
         elif self.display_type == 3:
             context = {
 
             }
-            return render_to_string('blog/sidebar/new_post.html', context=context)
-        elif self.display_type == 4:
-            context = {
-
-            }
             return render_to_string('blog/sidebar/hot_post.html', context=context)
-        elif self.display_type == 5:
+        elif self.display_type == 4:
             context = {
 
             }

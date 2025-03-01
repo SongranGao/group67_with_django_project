@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, F
 from django.core.paginator import Paginator
 from unicodedata import category
-from .models import Category, Post
+from .forms import PostForm
+from .models import Category, Post, Tag
 
 
 # Create your views here.
@@ -65,3 +67,19 @@ def archives(request, year, month):
     page_obj = paginator.get_page(page_number)
     context = {'page_obj': page_obj, 'year': year, 'month': month}
     return render(request, 'blog/archives_list.html', context)
+
+def add_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.owner = request.user
+            post.save()
+            return redirect('blog:post_detail', post_id=post.pk)
+    else:
+        form = PostForm()
+
+    categories = Category.objects.all()
+    tags = Tag.objects.all()
+
+    return render(request, 'users/add_post.html', {'form': form, 'categories': categories, 'tags': tags})
