@@ -1,7 +1,7 @@
 {% extends 'users/user_profile.html' %}
 
 {% block title %}
-<li class="is-active"><a>发表文章</a></li>
+<li class="is-active"><a>Publish a new Post</a></li>
 {% endblock  %}
 
 {% block content %}
@@ -9,23 +9,23 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="field">
-            <label class="label">标题</label>
+            <label class="label">Title</label>
             <div class="control">
-                <input class="input" type="text" name="title" placeholder="文章标题" required>
+                <input class="input" type="text" name="title" placeholder="Title" required>
             </div>
         </div>
         <div class="field">
-            <label class="label">描述</label>
+            <label class="label">Description</label>
             <div class="control">
-                <textarea class="textarea" name="desc" placeholder="文章描述"></textarea>
+                <textarea class="textarea" name="desc" placeholder="Post Description..."></textarea>
             </div>
         </div>
         <div class="field">
-            <label class="label">类别</label>
+            <label class="label">Category</label>
             <div class="control">
                 <div class="select">
                     <select name="category" required>
-                        <option value="">选择类别</option>
+                        <option value="">select a category</option>
                         {% for category in categories %}
                         <option value="{{ category.id }}">{{ category.name }}</option>
                         {% endfor %}
@@ -34,17 +34,17 @@
             </div>
         </div>
         <div class="field">
-            <label class="label">内容</label>
+            <label class="label">Content</label>
             <div class="control">
                 {{ form.content }}
             </div>
         </div>
         <div class="field">
-            <label class="label">标签</label>
+            <label class="label">Tag</label>
             <div class="control">
                 <div class="select">
                     <select name="tags">
-                        <option value="">选择标签</option>
+                        <option value="">select a tag</option>
                         {% for tag in tags %}
                         <option value="{{ tag.id }}">{{ tag.name }}</option>
                         {% endfor %}
