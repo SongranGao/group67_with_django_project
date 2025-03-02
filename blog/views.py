@@ -40,22 +40,20 @@ def post_detail(request, post_id):
 
 
 def search(request):
-    """ related search view """
-    keyword = request.GET.get('keyword')
-    # No search displays all articles by default
-    if not keyword:
-        post_list = Post.objects.all()
-    else:
+    """ Related search view """
+    keyword = request.GET.get('keyword', '')
+    if keyword:
         post_list = Post.objects.filter(
             Q(title__icontains=keyword) | Q(desc__icontains=keyword) | Q(content__icontains=keyword)
         )
-        paginator = Paginator(post_list, 5)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
+    else:
+        post_list = Post.objects.all()
 
-    context = {
-        'page_obj': page_obj
-    }
+    paginator = Paginator(post_list, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {'page_obj': page_obj}
     return render(request, 'blog/index.html', context)
 
 
