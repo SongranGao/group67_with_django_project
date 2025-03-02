@@ -41,13 +41,13 @@ def post_detail(request, post_id):
 
 def search(request):
     """ Related search view """
-    keyword = request.GET.get('keyword', '')
+    keyword = request.GET.get('keyword', '').strip()
+    post_list = Post.objects.all()
+
     if keyword:
         post_list = Post.objects.filter(
             Q(title__icontains=keyword) | Q(desc__icontains=keyword) | Q(content__icontains=keyword)
         )
-    else:
-        post_list = Post.objects.all()
 
     paginator = Paginator(post_list, 5)
     page_number = request.GET.get('page')
