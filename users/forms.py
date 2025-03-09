@@ -22,7 +22,7 @@ class LoginForm(forms.Form):
 
 class RegisterForm(forms.ModelForm):
     email = forms.EmailField(label='Email', max_length=32, widget=forms.EmailInput(attrs={
-        'class': 'input', 'placeholder': 'username/email'
+        'class': 'input', 'placeholder': 'email'
     }))
     password = forms.CharField(label='Password', min_length=6, widget=forms.PasswordInput(attrs={
         'class': 'input', 'placeholder': 'password'
@@ -49,7 +49,7 @@ class RegisterForm(forms.ModelForm):
 
 class ForgetPwdForm(forms.Form):
     email = forms.EmailField(label='Please enter your registered email address', min_length=4, widget=forms.EmailInput(attrs={
-        'class': 'input', 'placeholder': 'username/address'
+        'class': 'input', 'placeholder': 'email address'
     }))
 
 class ModifyPwdForm(forms.Form):
