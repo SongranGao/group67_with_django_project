@@ -124,25 +124,31 @@ def logout_view(request):
 @login_required(login_url='users:login')
 def editor_users(request):
     user = User.objects.get(id=request.user.id)
+
     if request.method == "POST":
         try:
             userprofile = user.userprofile
             form = UserForm(request.POST, instance=user)
             user_profile_form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+
             if form.is_valid() and user_profile_form.is_valid():
                 form.save()
                 user_profile_form.save()
                 return redirect('users:user_profile')
+            else:
+                print("\n Form Errors:", form.errors, user_profile_form.errors)
+
         except UserProfile.DoesNotExist:
             form = UserForm(request.POST, instance=user)
             user_profile_form = UserProfileForm(request.POST, request.FILES)
+
             if form.is_valid() and user_profile_form.is_valid():
                 form.save()
                 new_user_profile = user_profile_form.save(commit=False)
                 new_user_profile.owner = request.user
                 new_user_profile.save()
-
                 return redirect('users:user_profile')
+
     else:
         try:
             userprofile = user.userprofile
@@ -151,6 +157,7 @@ def editor_users(request):
         except UserProfile.DoesNotExist:
             form = UserForm(instance=user)
             user_profile_form = UserProfileForm()
+
     return render(request, 'users/editor_users.html', locals())
 
 def add_article(request):

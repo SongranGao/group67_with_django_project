@@ -136,6 +136,19 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 400,
+        'width': '100%',
+        'extraPlugins': ','.join([
+            'uploadimage',
+        ]),
+        'filebrowserUploadUrl': "/ckeditor/upload/",
+        'filebrowserUploadMethod': "form",
+    }
+}
+
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_HOST_USER = "gaogao20021030@163.com"
 EMAIL_HOST_PASSWORD = "gsr021030"

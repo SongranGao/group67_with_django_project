@@ -99,3 +99,33 @@ class BlogViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Test Post")
         self.assertTemplateUsed(response, "blog/archives_list.html")
+
+
+class AddPostViewTestCase(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(username="testuser", email="test@example.com", password="password123")
+        self.category = Category.objects.create(name="Test Category")
+        self.tag = Tag.objects.create(name="Test Tag")
+
+    def test_get_add_post_page(self):
+        self.client.login(username="testuser", password="password123")
+        response = self.client.get(reverse('blog:add_post'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/add_post.html')
+        self.assertContains(response, '<form')
+
+    def test_post_creation(self):
+        self.client.login(username="testuser", password="password123")
+        response = self.client.post(reverse('blog:add_post'), {
+            'title': 'Test Post',
+            'desc': 'Test description',
+            'category': self.category.id,
+            'content': 'This is a test post.',
+            'tags': [self.tag.id],
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Post.objects.count(), 1)
+        post = Post.objects.first()
+        self.assertEqual(post.title, 'Test Post')
+        self.assertEqual(post.owner, self.user)
