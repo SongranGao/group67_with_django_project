@@ -26,6 +26,7 @@ class MyBackend(ModelBackend):
 
 
 def active_user(request, active_code):
+    """modify the user state"""
     all_records = EmailVerifyRecord.objects.filter(code=active_code)
     if all_records:
         for record in all_records:
@@ -39,6 +40,7 @@ def active_user(request, active_code):
 
 
 def login_view(request):
+    """login function"""
     if request.method != 'POST':
         form = LoginForm()
     else:
@@ -49,6 +51,7 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
+                # go to user_profile page after successful login
                 return redirect('users:user_profile')
             else:
                 return HttpResponse('The account or password is incorrect')
@@ -57,6 +60,7 @@ def login_view(request):
 
 
 def register(request):
+    """register view"""
     if request.method != 'POST':
         form = RegisterForm()
     else:

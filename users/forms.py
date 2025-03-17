@@ -36,6 +36,7 @@ class RegisterForm(forms.ModelForm):
         fields = ('email','password')
 
     def clean_email(self):
+        """Verify that the user exists"""
         email = self.cleaned_data.get('email')
         exists = User.objects.filter(email=email).exists()
         if exists:
@@ -43,6 +44,7 @@ class RegisterForm(forms.ModelForm):
         return email
 
     def clean_password_1(self):
+        """Verify that passwords are the same"""
         if self.cleaned_data.get('password') != self.cleaned_data.get('password_1'):
             raise forms.ValidationError("Two different passwords entered.")
         return self.cleaned_data['password_1']
