@@ -30,6 +30,6 @@ def send_register_email(email, send_type='register'):
         email_title = 'Retrieve password link'
         email_body = 'Please click the link below to change your password: http://127.0.0.1:8000/users/forget_pwd_url/{0}'.format(code)
 
-        send_status = send_mail(email_title, email_body, '15336112587@163.com', [email])
+        send_status = send_mail(email_title, email_body, 'gaogao20021030@163.com', [email])
         if send_status:
             pass
